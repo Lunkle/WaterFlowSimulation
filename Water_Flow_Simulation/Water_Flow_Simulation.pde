@@ -1,4 +1,4 @@
-final float SQUARE_SIZE = 1;//5;
+final float SQUARE_SIZE = 3;//5;
 final int GRID_X = 160;//160;
 final int GRID_Y = 120;//120;
 
@@ -13,7 +13,7 @@ int waterPourX, waterPourY;
 
 final float FRAMES_PER_SECOND = 20; //Change this to slow or speed up the animation
 
-float[][] heights = new float[GRID_X][GRID_Y];
+Height[][] heights = new Height[GRID_X][GRID_Y];
 float[][] depths = new float[GRID_X][GRID_Y];
 
 void setup() {
@@ -24,8 +24,8 @@ void setup() {
 
 void draw() {
   if (startedPouring == true) {
-    updateWaterSimple();
-    updateWaterSimple();
+    updateWaterComplicated();
+    //updateWaterSimple();
   }
   setBackground();
   displaySquares();
@@ -48,10 +48,10 @@ void displaySquares() {
   for (int i = 0; i < GRID_X; i++) {
     for (int j = 0; j < GRID_Y; j++) {
       if (depths[i][j] < 0.001) {
-        if (heights[i][j] > 0) {
-          fill(255, 255 - parseInt(heights[i][j]), 0);
+        if (heights[i][j].h > 0) {
+          fill(255, 255 - parseInt(heights[i][j].h), 0);
         } else {
-          fill(255 + heights[i][j], 255, 0);
+          fill(255 + heights[i][j].h, 255, 0);
         }
       } else {
         float gradientPerccentage =  min(510, depths[i][j]) / 510;
@@ -100,10 +100,10 @@ void generateTerrain() {
   }
   for (int i = 0; i < GRID_X; i++) {
     for (int j = 0; j < GRID_Y; j++) {
-      heights[i][j] = random(-455, -405);
+      heights[i][j] = new Height(random(-455, -405), i, j);
       //If it is near a mountain centre, make it higher
       for (int k = 0; k < numOfMountains; k++) {
-        heights[i][j] += min(300, 100 * mountainSizes[k]/dist(mountainCentres[k].x, mountainCentres[k].y, i, j));
+        heights[i][j].h += min(300, 100 * mountainSizes[k]/dist(mountainCentres[k].x, mountainCentres[k].y, i, j));
       }
     }
   }

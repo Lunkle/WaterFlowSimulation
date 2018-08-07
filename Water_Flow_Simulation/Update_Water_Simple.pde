@@ -26,9 +26,9 @@ void updateWaterSimple(){
                     yValues = remove(yValues, yRemovalIndex);
                     if(!(isOutOfRange(i + x, j + y))){
                         float amountFlowed = 0;
-                        if(depths[i][j] > 0 && depths[i][j] + heights[i][j] > depths[i + x][j + y] + heights[i + x][j + y]){
-                            amountFlowed = min(FLOW_AMOUNT, depths[i][j] + heights[i][j] - depths[i + x][j + y] - heights[i + x][j + y]);
-                        }else if(depths[i + x][j + y] > 0 && depths[i][j] + heights[i][j] < depths[i + x][j + y] + heights[i + x][j + y]){
+                        if(depths[i][j] > 0 && depths[i][j] + heights[i][j].h > depths[i + x][j + y] + heights[i + x][j + y].h){
+                            amountFlowed = min(FLOW_AMOUNT, depths[i][j] + heights[i][j].h - depths[i + x][j + y] - heights[i + x][j + y].h);
+                        }else if(depths[i + x][j + y] > 0 && depths[i][j] + heights[i][j].h < depths[i + x][j + y] + heights[i + x][j + y].h){
                             amountFlowed = max(-FLOW_AMOUNT, -depths[i + x][j + y]);
                         }
                         depths[i][j] = depths[i][j] - amountFlowed;
